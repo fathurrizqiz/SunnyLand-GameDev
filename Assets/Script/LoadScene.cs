@@ -17,5 +17,16 @@ public class LoadScene : MonoBehaviour
     {
         Time.timeScale = 1;
     }
-    
+    public void restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
+    }
+    public void GoToMainMenu()
+    {
+
+        Time.timeScale = 1; 
+        SceneManager.LoadScene("mainmenu");
+
+    }
 }
