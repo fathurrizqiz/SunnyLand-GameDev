@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement; // untuk ganti scene
+using UnityEngine.UI; // jika ingin mengakses Button
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public int score = 0;
     public TextMeshProUGUI scoreText;
+
+    public GameObject targetPanel; // <- Tambahkan ini
 
     void Awake()
     {
@@ -19,11 +23,24 @@ public class GameManager : MonoBehaviour
     public void AddScore(int value)
     {
         score += value;
+
+        if (score == 29)
+        {
+            Debug.Log("target tercapai");
+            targetPanel.SetActive(true); // tampilkan panel
+        }
+
         UpdateScoreUI();
     }
 
     void UpdateScoreUI()
     {
-        scoreText.text = "" + score.ToString(); // line 34
+        scoreText.text = score.ToString();
+    }
+
+    public void NextLevel()
+    {
+        // Ganti dengan nama scene berikutnya
+        SceneManager.LoadScene("Level 3");
     }
 }
