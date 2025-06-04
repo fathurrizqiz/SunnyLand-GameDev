@@ -3,31 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(KnockBack))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Player Movement")]
+    [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float runSpeed = 8f;
     public float jumpForce = 10f;
-
-    public bool isStomping { get; private set; }
 
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sprite;
     private PlayerController playerController;
+    private BoxCollider2D coll;
+    private KnockBack knockBack;
 
-    // Untuk input dari button UI
+    [Header("Jump Settings")]
+    [SerializeField] private LayerMask jumpableGround;
+
+    [Header("Health")]
+    [SerializeField] private int maxHealth = 5;
+    private int currentHealth;
+
+    [Header("Knockback Settings")]
+    [SerializeField] private float knockBackThrust = 10f;
+
     private float mobileInputX = 0f;
-
     private Vector2 moveInput;
     private bool isJumping = false;
 
     private enum MovementState { idle, walk, jump, fall, run }
-
-    [Header("Jump Settings")]
-    [SerializeField] private LayerMask jumpableGround;
-    private BoxCollider2D coll;
 
     private void Awake()
     {
@@ -35,8 +40,10 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         coll = GetComponent<BoxCollider2D>();
+        knockBack = GetComponent<KnockBack>();
 
         playerController = new PlayerController();
+        currentHealth = maxHealth;
     }
 
     private void OnEnable()
@@ -45,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
 
         playerController.Movement.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerController.Movement.Move.canceled += ctx => moveInput = Vector2.zero;
-
         playerController.Movement.Jump.performed += ctx => Jump();
     }
 
@@ -64,25 +70,26 @@ public class PlayerMovement : MonoBehaviour
         {
             moveInput = playerController.Movement.Move.ReadValue<Vector2>();
         }
-    }
-
-    private void FixedUpdate()
-    {
-        Vector2 targetVelocity = new Vector2((moveInput.x + mobileInputX) * moveSpeed, rb.velocity.y);
-        rb.velocity = targetVelocity;
-
-        UpdateAnimation();
 
         if (isGrounded() && Mathf.Abs(rb.velocity.y) < 0.01f)
         {
             isJumping = false;
         }
+
+        UpdateAnimation();
+    }
+
+    private void FixedUpdate()
+    {
+        if (knockBack.GettingKnockedBack) return;
+
+        Vector2 targetVelocity = new Vector2((moveInput.x + mobileInputX) * moveSpeed, rb.velocity.y);
+        rb.velocity = targetVelocity;
     }
 
     private void UpdateAnimation()
     {
         MovementState state;
-
         float horizontal = moveInput.x != 0 ? moveInput.x : mobileInputX;
 
         if (horizontal > 0f)
@@ -126,61 +133,64 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Public methods for mobile input
     public void MoveRight(bool isPressed)
     {
-        if (isPressed)
-            mobileInputX = 1f;
-        else if (mobileInputX == 1f)
-            mobileInputX = 0f;
+        mobileInputX = isPressed ? 1f : (mobileInputX == 1f ? 0f : mobileInputX);
     }
 
     public void MoveLeft(bool isPressed)
     {
-        if (isPressed)
-            mobileInputX = -1f;
-        else if (mobileInputX == -1f)
-            mobileInputX = 0f;
+        mobileInputX = isPressed ? -1f : (mobileInputX == -1f ? 0f : mobileInputX);
     }
 
     public void MobileJump()
     {
-        if (isGrounded())
-        {
-            Jump();
-        }
+        if (isGrounded()) Jump();
     }
 
-  
-private void OnCollisionEnter2D(Collision2D collision)
-{
-    if (collision.gameObject.CompareTag("Enemy"))
+    // Knockback-aware TakeDamage
+    public void TakeDamage(int damage, Transform damageSource)
     {
-        foreach (ContactPoint2D contact in collision.contacts)
+        if (knockBack.GettingKnockedBack) return;
+
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
-            if (contact.normal.y < -0.5f) // Deteksi dari atas
-            {
-                Debug.Log("Player menginjak musuh!");
+            currentHealth = 0;
+            Debug.Log("Player Mati");
+            // Tambahkan logic kematian jika perlu
+        }
 
-                // Pantulkan player ke atas
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.5f);
+        knockBack.GetKnockedBack(damageSource, knockBackThrust);
+        UpdateHealthUI();
+    }
 
-                // Hancurkan musuh (root dari child collider yang kena)
-                Destroy(collision.transform.root.gameObject);
-                return;
-            }
-            else
+    private void UpdateHealthUI()
+    {
+        // Placeholder: isi dengan update UI sesuai sistem UI kamu
+        Debug.Log("HP: " + currentHealth + "/" + maxHealth);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            foreach (ContactPoint2D contact in collision.contacts)
             {
-                Debug.Log("Player kena musuh dari samping.");
-                // Bisa tambahkan pengurangan darah di sini (opsional)
+                if (contact.normal.y < -0.5f)
+                {
+                    Debug.Log("Player menginjak musuh!");
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce / 1.5f);
+                    Destroy(collision.transform.root.gameObject);
+                    return;
+                }
+                else
+                {
+                    Debug.Log("Player kena musuh dari samping.");
+                    TakeDamage(1, collision.transform);
+                }
             }
-        Debug.Log("Tag objek: " + collision.gameObject.tag);
-        Debug.Log("Arah tumbukan: " + contact.normal);
         }
     }
-    Debug.Log("Terdeteksi tabrakan dengan: " + collision.gameObject.name);
-    
-
-}
-
-
 }

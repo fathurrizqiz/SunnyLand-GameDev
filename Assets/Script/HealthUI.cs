@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
 
 public class HealthUI : MonoBehaviour
 {
     public int maxHealth = 3;
     private int currentHealth;
+
+    [Header("Lose Panel")]
+    public GameObject losePanel;
 
     [Header("Set 1 Layers (Top to Bottom)")]
     public GameObject healthLayer3_Set1;
@@ -35,6 +39,12 @@ public class HealthUI : MonoBehaviour
         currentHealth = maxHealth;
         Debug.Log($"Inisialisasi HealthUI pada GameObject: {gameObject.name}, Health: {currentHealth}/{maxHealth}");
         UpdateHealthLayers();
+
+        // Pastikan losePanel dimatikan di awal
+        if (losePanel != null)
+        {
+            losePanel.SetActive(false);
+        }
     }
 
     public void TakeDamage(int amount)
@@ -47,6 +57,14 @@ public class HealthUI : MonoBehaviour
         if (currentHealth == 0)
         {
             Debug.Log("Game Over!");
+            if (losePanel != null)
+            {
+                losePanel.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("Lose Panel belum diset di Inspector.");
+            }
         }
     }
 
@@ -60,13 +78,11 @@ public class HealthUI : MonoBehaviour
 
     void UpdateLayerSet(GameObject layer3, GameObject layer2, GameObject layer1, GameObject layer0, string setName)
     {
-        // Matikan semua layer
         if (layer3 != null) layer3.SetActive(false);
         if (layer2 != null) layer2.SetActive(false);
         if (layer1 != null) layer1.SetActive(false);
         if (layer0 != null) layer0.SetActive(false);
 
-        // Aktifkan layer sesuai currentHealth
         switch (currentHealth)
         {
             case 3:
@@ -93,10 +109,25 @@ public class HealthUI : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"CurrentHealth di Update: {currentHealth}");
         if (Input.GetKeyDown(KeyCode.T))
         {
             TakeDamage(1);
         }
+    }
+    public void RestartGame()
+    {
+        // Reload scene saat ini
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Keluar dari game...");
+        Application.Quit();
+
+        // Jika di editor, log untuk memastikan dipanggil
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }
