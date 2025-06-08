@@ -55,6 +55,8 @@ public class HealthUI : MonoBehaviour
         UpdateHealthLayers();
 
         if (currentHealth == 0)
+        
+
         {
             Debug.Log("Game Over!");
             if (losePanel != null)
@@ -65,6 +67,7 @@ public class HealthUI : MonoBehaviour
             {
                 Debug.LogWarning("Lose Panel belum diset di Inspector.");
             }
+            Time.timeScale = 0f;
         }
     }
 
@@ -117,6 +120,7 @@ public class HealthUI : MonoBehaviour
     public void RestartGame()
     {
         // Reload scene saat ini
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

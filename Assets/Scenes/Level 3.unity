@@ -16983,7 +16983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
-  losePanel: {fileID: 0}
+  losePanel: {fileID: 2030524308}
   healthLayer3_Set1: {fileID: 1381528764}
   healthLayer2_Set1: {fileID: 779405738}
   healthLayer1_Set1: {fileID: 2053914706}

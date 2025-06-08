@@ -831,7 +831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.11580774, y: 0.27526483}
   m_AnchorMax: {x: 0.5, y: 0.8117352}
-  m_AnchoredPosition: {x: -2.4999924, y: -0.25989914}
+  m_AnchoredPosition: {x: 15.4, y: -0.25989914}
   m_SizeDelta: {x: 5, y: 0.51989746}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &199382673
@@ -883,8 +883,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2998,7 +2998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5611922, y: 0.21726482}
   m_AnchorMax: {x: 0.86700004, y: 0.3985099}
-  m_AnchoredPosition: {x: 0.099998474, y: -0.70000076}
+  m_AnchoredPosition: {x: 0.099998474, y: -0.7000122}
   m_SizeDelta: {x: -1.626503, y: -0.9689007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &700262322
@@ -6838,7 +6838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1260548325
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6857,10 +6857,10 @@ RectTransform:
   m_Father: {fileID: 1554245153}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.3642135, y: 0.3694211}
-  m_AnchorMax: {x: 0.6417453, y: 0.65800005}
-  m_AnchoredPosition: {x: -1.0314941, y: -0.42539978}
-  m_SizeDelta: {x: -2.0629883, y: 0.94999695}
+  m_AnchorMin: {x: 0.3386952, y: 0.31568423}
+  m_AnchorMax: {x: 0.6665607, y: 0.6875263}
+  m_AnchoredPosition: {x: -2.3365002, y: -0.75}
+  m_SizeDelta: {x: 0.17129898, y: 3.5810013}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1260548326
 MonoBehaviour:
@@ -6875,14 +6875,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 5e5b81263fa07264ba4aeff56f02d368, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7802,8 +7802,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -23264,8 +23264,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
