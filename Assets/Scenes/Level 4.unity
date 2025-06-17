@@ -6284,7 +6284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
-  losePanel: {fileID: 1260548324}
+  GameOverPanel: {fileID: 1509221559}
   healthLayer3_Set1: {fileID: 972583906}
   healthLayer2_Set1: {fileID: 2016651271}
   healthLayer1_Set1: {fileID: 443520648}
@@ -22210,7 +22210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
-  losePanel: {fileID: 0}
+  GameOverPanel: {fileID: 0}
   healthLayer3_Set1: {fileID: 0}
   healthLayer2_Set1: {fileID: 0}
   healthLayer1_Set1: {fileID: 0}

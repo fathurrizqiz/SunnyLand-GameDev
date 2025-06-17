@@ -8,7 +8,7 @@ public class HealthUI : MonoBehaviour
     private int currentHealth;
 
     [Header("Lose Panel")]
-    public GameObject losePanel;
+    public GameObject GameOverPanel;
 
     [Header("Set 1 Layers (Top to Bottom)")]
     public GameObject healthLayer3_Set1;
@@ -41,9 +41,9 @@ public class HealthUI : MonoBehaviour
         UpdateHealthLayers();
 
         // Pastikan losePanel dimatikan di awal
-        if (losePanel != null)
+        if (GameOverPanel != null)
         {
-            losePanel.SetActive(false);
+            GameOverPanel.SetActive(false);
         }
     }
 
@@ -59,9 +59,9 @@ public class HealthUI : MonoBehaviour
 
         {
             Debug.Log("Game Over!");
-            if (losePanel != null)
+            if (GameOverPanel != null)
             {
-                losePanel.SetActive(true);
+                GameOverPanel.SetActive(true);
             }
             else
             {
