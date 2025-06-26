@@ -49,6 +49,7 @@ public class LoadScene : MonoBehaviour
     {
         if (GameManager.instance != null)
         {
+            // GameManager.instance.isReviving = false;
             GameManager.instance.Revive(); // Tampilkan konfirmasi revive
         }
         else

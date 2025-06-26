@@ -134,4 +134,11 @@ public class HealthUI : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         #endif
     }
+    public void ResetHealth()
+{
+    currentHealth = maxHealth;
+    UpdateHealthLayers();
+    Debug.Log($"HP di-reset ke {currentHealth}/{maxHealth}");
+}
+
 }
